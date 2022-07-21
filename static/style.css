@@ -1,0 +1,16 @@
+.img-icon {
+    width: 25px;
+    height: 25px;
+}
+
+body {
+    background-color: rgb(214, 230, 244) !important;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.font-weight-coret {
+    text-decoration: line-through !important;
+}
