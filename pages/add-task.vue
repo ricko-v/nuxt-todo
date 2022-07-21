@@ -79,36 +79,48 @@ export default {
   },
   methods: {
     tambah() {
-      let post;
+      if (this.judul == "" || this.deskripsi == "") {
+        this.$bvToast.toast(`Data masih kosong!`, {
+          title: `Pesan`,
+          variant: "danger",
+          toaster: "b-toaster-top-center",
+          solid: true,
+          appendToast: true,
+        });
+      } else {
+        let post;
 
-      if (!localStorage.NT_TASK) {
-        post = [
-          {
+        if (!localStorage.NT_TASK) {
+          post = [
+            {
+              judul: this.judul,
+              deskripsi: this.deskripsi,
+              status: "belum",
+              username: JSON.parse(localStorage.NT_LOGIN)["username"],
+              id: Math.floor(Math.random() * 1000000),
+            },
+          ];
+          localStorage.NT_TASK = JSON.stringify(post);
+        } else {
+          post = {
             judul: this.judul,
             deskripsi: this.deskripsi,
             status: "belum",
+            username: JSON.parse(localStorage.NT_LOGIN)["username"],
             id: Math.floor(Math.random() * 1000000),
-          },
-        ];
-        localStorage.NT_TASK = JSON.stringify(post);
-      } else {
-        post = {
-          judul: this.judul,
-          deskripsi: this.deskripsi,
-          status: "belum",
-          id: Math.floor(Math.random() * 1000000),
-        };
-        let getPost = JSON.parse(localStorage.NT_TASK);
-        getPost.push(post);
-        localStorage.NT_TASK = JSON.stringify(getPost);
+          };
+          let getPost = JSON.parse(localStorage.NT_TASK);
+          getPost.push(post);
+          localStorage.NT_TASK = JSON.stringify(getPost);
+        }
+
+        this.judul = "";
+        this.deskripsi = "";
+
+        this.$router.push({
+          path: "/task",
+        });
       }
-
-      this.judul = "";
-      this.deskripsi = "";
-
-      this.$router.push({
-        path: "/task",
-      });
     },
   },
 };

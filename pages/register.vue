@@ -106,38 +106,43 @@ export default {
     register() {
       let data;
 
-      if (!localStorage.NT_AKUN) {
-        data = [
-          {
+      if (this.username == "" || this.nama == "" || this.password == "") {
+        this.$bvToast.toast(`Data masih kosong!`, {
+          title: `Pesan`,
+          variant: "danger",
+          toaster: "b-toaster-top-center",
+          solid: true,
+          appendToast: true,
+        });
+      } else {
+        if (!localStorage.NT_AKUN) {
+          data = [
+            {
+              username: this.username,
+              nama: this.nama,
+              password: this.password,
+            },
+          ];
+          localStorage.NT_AKUN = JSON.stringify(data);
+        } else {
+          data = {
             username: this.username,
             nama: this.nama,
             password: this.password,
-          },
-        ];
-        localStorage.NT_AKUN = JSON.stringify(data);
-      } else {
-        data = {
-          username: this.username,
-          nama: this.nama,
-          password: this.password,
-        };
-        let akun = JSON.parse(localStorage.NT_AKUN);
-        akun.push(data);
-        localStorage.NT_AKUN = JSON.stringify(akun);
+          };
+          let akun = JSON.parse(localStorage.NT_AKUN);
+          akun.push(data);
+          localStorage.NT_AKUN = JSON.stringify(akun);
+        }
+
+        this.$router.push({
+          path: "/login",
+        });
+
+        this.username = "";
+        this.nama = "";
+        this.password = "";
       }
-
-      this.$bvToast.toast(`Berhasil mendaftarkan akun!`, {
-        title: `Pesan`,
-        variant: "success",
-        toaster: "b-toaster-top-center",
-        solid: true,
-        autoHideDelay: 3000,
-        appendToast: true,
-      });
-
-      this.username = "";
-      this.nama = "";
-      this.password = "";
     },
   },
 };

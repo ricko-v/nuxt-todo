@@ -97,17 +97,7 @@ export default {
   },
   methods: {
     login() {
-      let akun = JSON.parse(localStorage.NT_AKUN);
-      let cari = akun.find(
-        (x) => x.username == this.username && x.password == this.password
-      );
-
-      if (cari) {
-        localStorage.NT_LOGIN = cari.nama;
-        this.$router.push({
-          path: "/task",
-        });
-      } else {
+      if (!localStorage.NT_AKUN) {
         this.$bvToast.toast(`Username atau Password salah!`, {
           title: `Pesan`,
           variant: "danger",
@@ -115,6 +105,29 @@ export default {
           solid: true,
           appendToast: true,
         });
+      } else {
+        let akun = JSON.parse(localStorage.NT_AKUN);
+        let cari = akun.find(
+          (x) => x.username == this.username && x.password == this.password
+        );
+
+        if (cari && akun) {
+          localStorage.NT_LOGIN = JSON.stringify({
+            nama: cari.nama,
+            username: cari.username,
+          });
+          this.$router.push({
+            path: "/task",
+          });
+        } else {
+          this.$bvToast.toast(`Username atau Password salah!`, {
+            title: `Pesan`,
+            variant: "danger",
+            toaster: "b-toaster-top-center",
+            solid: true,
+            appendToast: true,
+          });
+        }
       }
     },
   },
