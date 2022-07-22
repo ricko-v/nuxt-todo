@@ -18,12 +18,24 @@
         <b-input-group>
           <b-form-input
             v-model="q"
+            :disabled="isCari ? true : false"
             class="shadow-none"
             placeholder="cari task..."
           ></b-form-input>
           <b-input-group-append>
-            <b-button @click="cari" class="shadow-none" variant="dark"
+            <b-button
+              @click="cari"
+              v-if="!isCari"
+              class="shadow-none"
+              variant="dark"
               >Cari</b-button
+            >
+            <b-button
+              @click="kosongkan"
+              v-if="isCari"
+              class="shadow-none"
+              variant="dark"
+              >X</b-button
             >
           </b-input-group-append>
         </b-input-group>
@@ -135,6 +147,7 @@ export default {
     return {
       nama: "",
       arrTugas: [],
+      isCari: false,
       q: "",
     };
   },
@@ -154,6 +167,11 @@ export default {
       this.$router.push({
         path: "/login",
       });
+    },
+    kosongkan() {
+      this.q = "";
+      this.getTask();
+      this.isCari = false;
     },
     cari() {
       let tugas = this.arrTugas;
@@ -178,7 +196,7 @@ export default {
         });
       }
 
-      this.q = "";
+      this.isCari = true;
     },
     getTask() {
       if (localStorage.NT_TASK) {

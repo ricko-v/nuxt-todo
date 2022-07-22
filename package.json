@@ -6,6 +6,7 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
+    "deploy": "surge --domain todo-nuxt.surge.sh",
     "generate": "nuxt generate"
   },
   "dependencies": {
