@@ -164,6 +164,7 @@ export default {
             judul: cari.judul,
             deskripsi: cari.deskripsi,
             status: cari.status,
+            username: cari.username,
           },
         ];
       } else {
